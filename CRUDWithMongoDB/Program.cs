@@ -1,5 +1,6 @@
 using CRUDWithMongoDB.Models;
 using CRUDWithMongoDB.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,11 @@ builder.Services.AddSingleton(databaseSettings);
 
 
 builder.Services.AddScoped<IBookServices, BookServices>();
+
+
+//Logger
+var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 

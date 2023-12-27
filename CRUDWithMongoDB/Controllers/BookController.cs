@@ -8,10 +8,12 @@ namespace CRUDWithMongoDB.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
+        private readonly ILogger<BookController> _logger;
         private readonly IBookServices _bookServices;
-        public BookController(IBookServices bookServices)
+        public BookController(IBookServices bookServices, ILogger<BookController> logger)
         {
             _bookServices = bookServices;
+            _logger = logger;
         }
 
 
@@ -24,6 +26,15 @@ namespace CRUDWithMongoDB.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
+            _logger.LogInformation("Hello");
+            try
+            {
+                throw new Exception("TTTTTTT");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
             var reslt = await _bookServices.GetAsync();
             return Ok(reslt);
         }
