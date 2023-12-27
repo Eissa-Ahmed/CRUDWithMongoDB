@@ -1,4 +1,5 @@
 using CRUDWithMongoDB.Models;
+using CRUDWithMongoDB.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddSwaggerGen();
 var databaseSettings = new DatabaseSettings();
 builder.Configuration.GetSection("BookDatabase").Bind(databaseSettings);
 builder.Services.AddSingleton(databaseSettings);
+
+
+builder.Services.AddScoped<IBookServices, BookServices>();
 
 var app = builder.Build();
 
